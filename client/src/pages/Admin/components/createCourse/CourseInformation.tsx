@@ -5,7 +5,7 @@ type Props = {
     name: string;
     description: string;
     price: string;
-    estimatedPrice?: string;
+    estimatedPrice: string;
     tags: string;
     level: string;
     category: string;
@@ -16,7 +16,7 @@ type Props = {
     name: string;
     description: string;
     price: string;
-    estimatedPrice?: string;
+    estimatedPrice: string;
     tags: string;
     level: string;
     category: string;

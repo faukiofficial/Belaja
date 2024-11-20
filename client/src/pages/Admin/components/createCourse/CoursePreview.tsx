@@ -2,11 +2,12 @@ import { FC } from "react";
 import CoursePlayer from "../../../../utils/CoursePlayer";
 import Ratings from "../../../../utils/Ratings";
 import { IoCheckmarkSharp } from "react-icons/io5";
+import { ICourse } from "../../../../redux/slices/courseSlice";
 
 type Props = {
   active: number;
   setActive: (active: number) => void;
-  courseData: any;
+  courseData: ICourse;
   handleCourseCreate: () => void;
   createCourseLoading: boolean;
 };
@@ -42,7 +43,7 @@ const CoursePreview: FC<Props> = ({
         <div className="w-full">
           <CoursePlayer
             videoUrl={courseData?.demoUrl}
-            title={courseData?.title}
+            title={courseData?.name}
           />
         </div>
         <div className="flex items-center">
@@ -95,7 +96,7 @@ const CoursePreview: FC<Props> = ({
       <h1 className="text-[25px] font-[600] mt-5">
         What you need to know before taking this course
       </h1>
-      {courseData?.prerequisites?.map((prerequisite: any, index: number) => (
+      {courseData?.prerequisites?.map((prerequisite: { title: string }, index: number) => (
         <div key={index} className="w-full mt-3 flex items-center gap-3">
           <div className="flex items-center gap-2">
             <IoCheckmarkSharp size={20} />
@@ -106,7 +107,7 @@ const CoursePreview: FC<Props> = ({
       <h1 className="text-[25px] font-[600] mt-5">
         What you will get from this course?
       </h1>
-      {courseData?.benefits?.map((benefit: any, index: number) => (
+      {courseData?.benefits?.map((benefit: { title: string }, index: number) => (
         <div key={index} className="w-full mt-3 flex items-center gap-3">
           <div className="flex items-center gap-2">
             <IoCheckmarkSharp size={20} />

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import UsersAnalytics from "./components/UsersAnalytics";
 import OrdersAnalytics from "./components/OrdersAnalytics";
 import { Link } from "react-router-dom";

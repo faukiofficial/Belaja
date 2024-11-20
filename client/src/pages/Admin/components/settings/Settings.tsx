@@ -2,9 +2,7 @@ import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../redux/hooks'
 import { getCategories, getFAQ } from '../../../../redux/slices/layoutSlice'
 
-type Props = {}
-
-const Settings = (props: Props) => {
+const Settings = () => {
     const dispatch = useAppDispatch()
     const {faq, categories} = useAppSelector((state) => state.layout)
 

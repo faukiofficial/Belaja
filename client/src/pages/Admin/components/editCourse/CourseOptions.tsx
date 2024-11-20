@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { IoCheckmark } from "react-icons/io5";
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
   setActive: (active: number) => void;
 };
 
-const CourseOptions: FC<Props> = ({ active, setActive }) => {
+const CourseOptions: FC<Props> = ({ active }) => {
   const options = [
     "Course Information",
     "Course Options",

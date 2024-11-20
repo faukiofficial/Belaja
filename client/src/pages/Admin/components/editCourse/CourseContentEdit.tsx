@@ -16,6 +16,7 @@ interface Section {
   videoLength: string;
   videoSection: string;
   links: Link[];
+  suggestion: string;
 }
 
 type Props = {
@@ -25,7 +26,6 @@ type Props = {
   setActive: (active: number) => void;
   handleSubmit: () => void;
 };
-
 
 const CourseContentEdit: React.FC<Props> = ({
   courseContentData,
@@ -90,6 +90,7 @@ const CourseContentEdit: React.FC<Props> = ({
         videoLength: "",
         videoSection: newVideoSection,
         links: [{ title: "", url: "" }],
+        suggestion: "",
       };
 
       setCourseContentData([...courseContentData, newContent]);
@@ -115,8 +116,9 @@ const CourseContentEdit: React.FC<Props> = ({
         videoLength: "",
         videoSection: "",
         links: [{ title: "", url: "" }],
+        suggestion: "",
       };
-  
+
       setCourseContentData([...courseContentData, newSection]);
       setActiveSection(activeSection + 1);
     }
@@ -146,17 +148,25 @@ const CourseContentEdit: React.FC<Props> = ({
     setCourseContentData(updatedData);
   };
 
-  const handleLinkTitleChange = (sectionIndex: number, linkIndex: number, value: string) => {
-    const updatedData = [...courseContentData];  // Make a shallow copy of the array
-    const updatedLinks = [...updatedData[sectionIndex].links];  // Create a new array for the links
-    updatedLinks[linkIndex] = { ...updatedLinks[linkIndex], title: value };  // Create a new object for the link
-    updatedData[sectionIndex].links = updatedLinks;  // Update the section with the new links array
-    setCourseContentData(updatedData);  // Set the updated data to the state
+  const handleLinkTitleChange = (
+    sectionIndex: number,
+    linkIndex: number,
+    value: string
+  ) => {
+    const updatedData = [...courseContentData]; // Make a shallow copy of the array
+    const updatedLinks = [...updatedData[sectionIndex].links]; // Create a new array for the links
+    updatedLinks[linkIndex] = { ...updatedLinks[linkIndex], title: value }; // Create a new object for the link
+    updatedData[sectionIndex].links = updatedLinks; // Update the section with the new links array
+    setCourseContentData(updatedData); // Set the updated data to the state
   };
-  
-  const handleLinkUrlChange = (sectionIndex: number, linkIndex: number, value: string) => {
-    const updatedData = [...courseContentData]; 
-    const updatedLinks = [...updatedData[sectionIndex].links]; 
+
+  const handleLinkUrlChange = (
+    sectionIndex: number,
+    linkIndex: number,
+    value: string
+  ) => {
+    const updatedData = [...courseContentData];
+    const updatedLinks = [...updatedData[sectionIndex].links];
     updatedLinks[linkIndex] = { ...updatedLinks[linkIndex], url: value };
     updatedData[sectionIndex].links = updatedLinks;
     setCourseContentData(updatedData);
@@ -196,11 +206,14 @@ const CourseContentEdit: React.FC<Props> = ({
       <form action="" onSubmit={handleSubmit}>
         {courseContentData?.map((item, index) => {
           const showSectionInput =
-          index === 0 || item.videoSection !== courseContentData[index - 1].videoSection;
+            index === 0 ||
+            item.videoSection !== courseContentData[index - 1].videoSection;
           return (
             <>
               <div
-                className={`w-full bg-white dark:bg-slate-700 p-4 ${showSectionInput && index !== 0 ? "mt-10" : ""}`}
+                className={`w-full bg-white dark:bg-slate-700 p-4 ${
+                  showSectionInput && index !== 0 ? "mt-10" : ""
+                }`}
               >
                 {showSectionInput && (
                   <>
@@ -259,7 +272,9 @@ const CourseContentEdit: React.FC<Props> = ({
                         placeholder="Enter video title"
                         value={item.title}
                         className="w-full p-2 600px:p-3 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white mt-2"
-                        onChange={(e) => handleTitleChange(index, e.target.value)}
+                        onChange={(e) =>
+                          handleTitleChange(index, e.target.value)
+                        }
                       />
                     </div>
                     <div className="my-3">
@@ -269,7 +284,9 @@ const CourseContentEdit: React.FC<Props> = ({
                         placeholder="Enter video url"
                         value={item.videoUrl}
                         className="w-full p-2 600px:p-3 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white mt-2"
-                        onChange={(e) => handleVideoUrlChange(index, e.target.value)}
+                        onChange={(e) =>
+                          handleVideoUrlChange(index, e.target.value)
+                        }
                       />
                     </div>
                     <div className="my-3">
@@ -279,7 +296,9 @@ const CourseContentEdit: React.FC<Props> = ({
                         placeholder="Enter video length in minute"
                         value={item.videoLength}
                         className="w-full p-2 600px:p-3 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white mt-2"
-                        onChange={(e) => handleVideoLengthChange(index, e.target.value)}
+                        onChange={(e) =>
+                          handleVideoLengthChange(index, e.target.value)
+                        }
                       />
                     </div>
                     <div className="my-3">
@@ -289,7 +308,9 @@ const CourseContentEdit: React.FC<Props> = ({
                         value={item.description}
                         rows={5}
                         className="w-full p-2 600px:p-3 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white mt-2"
-                        onChange={(e) => handleDescriptionChange(index, e.target.value)}
+                        onChange={(e) =>
+                          handleDescriptionChange(index, e.target.value)
+                        }
                       />
                     </div>
                     {item?.links.map((link, linkIndex) => (
@@ -314,14 +335,26 @@ const CourseContentEdit: React.FC<Props> = ({
                           placeholder="Source Code... (Link title)"
                           value={link.title}
                           className="w-full p-2 600px:p-3 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white mt-2"
-                          onChange={(e) => handleLinkTitleChange(index, linkIndex, e.target.value)}
+                          onChange={(e) =>
+                            handleLinkTitleChange(
+                              index,
+                              linkIndex,
+                              e.target.value
+                            )
+                          }
                         />
                         <input
                           type="text"
                           placeholder="Source Code Url... (Link URL)"
                           value={link.url}
                           className="w-full p-2 600px:p-3 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white mt-2"
-                          onChange={(e) => handleLinkUrlChange(index, linkIndex, e.target.value)}
+                          onChange={(e) =>
+                            handleLinkUrlChange(
+                              index,
+                              linkIndex,
+                              e.target.value
+                            )
+                          }
                         />
                       </div>
                     ))}
@@ -351,12 +384,12 @@ const CourseContentEdit: React.FC<Props> = ({
           );
         })}
         <div className="mt-4 w-full cursor-pointer flex justify-center">
-        <div
-          className="flex items-center text-[20px] bg-white dark:bg-gray-800 hover:bg-slate-200 dark:hover:bg-gray-700 text-black dark:text-white border-2 p-2 rounded-md"
-          onClick={addNewSection}
-        >
-          <AiOutlinePlusCircle className="mr-2" /> Add New Section
-        </div>
+          <div
+            className="flex items-center text-[20px] bg-white dark:bg-gray-800 hover:bg-slate-200 dark:hover:bg-gray-700 text-black dark:text-white border-2 p-2 rounded-md"
+            onClick={addNewSection}
+          >
+            <AiOutlinePlusCircle className="mr-2" /> Add New Section
+          </div>
         </div>
       </form>
       <div className="w-full flex items-center justify-start gap-5 mt-4">

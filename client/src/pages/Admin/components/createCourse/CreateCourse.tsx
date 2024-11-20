@@ -5,7 +5,7 @@ import CourseData from "./CourseData";
 import CourseContent from "./CourseContent";
 import CoursePreview from "./CoursePreview";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { createCourse } from "../../../../redux/slices/courseSlice";
+import { createCourse, ICourse } from "../../../../redux/slices/courseSlice";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -51,7 +51,7 @@ const CreateCourse = () => {
     },
   ]);
 
-  const [courseData, setCourseData] = useState({});
+  const [courseData, setCourseData] = useState({} as ICourse);
 
   const handleSubmit = async () => {
     const formattedBenefits = benefits.map((benefit) => ({
@@ -87,7 +87,7 @@ const CreateCourse = () => {
   const handleCourseCreate = async () => {
     const data = courseData;
     if (!createCourseLoading) {
-      const result = await dispatch(createCourse(data));
+      const result = await dispatch(createCourse(data as ICourse));
       if (result.meta.requestStatus === "fulfilled") {
         toast.success("Course created successfully");
         navigate("/admin/courses")

@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import {
   editCourseById,
   getCourseById,
+  ICourse,
 } from "../../../../redux/slices/courseSlice";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
@@ -22,77 +23,114 @@ const EditCourse = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getCourseById(id));
+    dispatch(getCourseById(id || ""));
   }, [dispatch, id]);
 
   const navigate = useNavigate();
 
   const [active, setActive] = useState(0);
 
-  const [courseInfo, setCourseInfo] = useState({
+  const [courseInfo, setCourseInfo] = useState<{
+    name: string;
+    description: string;
+    price: number;
+    estimatedPrice?: number;
+    tags: string;
+    level: string;
+    category: string;
+    demoUrl: string;
+    thumbnail: {
+      public_id: string;
+      url: string;
+      base64: string;
+    };
+  }>({
     name: "",
     description: "",
-    price: "",
-    estimatedPrice: "",
+    price: 0,
+    estimatedPrice: 0,
     tags: "",
     level: "",
     category: "",
     demoUrl: "",
-    thumbnail: "",
+    thumbnail: {
+      public_id: "",
+      url: "",
+      base64: "",
+    },
   });
   const [benefits, setBenefits] = useState([{ title: "" }]);
   const [prerequisites, setPrerequisites] = useState([{ title: "" }]);
-  const [courseContentData, setCourseContentData] = useState([
+
+  const [courseContentData, setCourseContentData] = useState<
+    {
+      videoUrl: string;
+      title: string;
+      description: string;
+      videoLength: string;
+      videoSection: string;
+      links: { title: string; url: string }[];
+      suggestion: string;
+    }[]
+  >([
     {
       videoUrl: "",
       title: "",
       description: "",
       videoLength: "",
       videoSection: "",
-      links: [
-        {
-          title: "",
-          url: "",
-        },
-      ],
+      links: [{ title: "", url: "" }],
       suggestion: "",
     },
   ]);
 
-  const [courseData, setCourseData] = useState({});
+  const [courseData, setCourseData] = useState({
+    name: course?.name || "",
+    description: course?.description || "",
+    price: course?.price || 0,
+    estimatedPrice: course?.estimatedPrice || 0,
+    tags: course?.tags || "",
+    level: course?.level || "",
+    category: course?.category || "",
+    demoUrl: course?.demoUrl || "",
+  });
 
   useEffect(() => {
     setCourseInfo({
-      name: course?.name,
-      description: course?.description,
-      price: course?.price,
-      estimatedPrice: course?.estimatedPrice,
-      tags: course?.tags,
-      level: course?.level,
-      category: course?.category,
-      demoUrl: course?.demoUrl,
+      name: course?.name || "",
+      description: course?.description || "",
+      price: course?.price || 0,
+      estimatedPrice: course?.estimatedPrice || 0,
+      tags: course?.tags || "",
+      level: course?.level || "",
+      category: course?.category || "",
+      demoUrl: course?.demoUrl || "",
       thumbnail: {
-        public_id: course?.thumbnail?.public_id,
-        url: course?.thumbnail?.url,
+        public_id: course?.thumbnail?.public_id || "",
+        url: course?.thumbnail?.url || "",
         base64: "",
       },
     });
     setBenefits(course?.benefits || [{ title: "" }]);
     setPrerequisites(course?.prerequisites || [{ title: "" }]);
-    setCourseContentData(course?.courseData || [{
-      videoUrl: "",
-      title: "",
-      description: "",
-      videoLength: "",
-      videoSection: "",
-      links: [
+    setCourseContentData(
+      course?.courseData || [
         {
+          videoUrl: "",
           title: "",
-          url: "",
+          description: "",
+          videoLength: "",
+          videoSection: "",
+          links: [
+            {
+              title: "",
+              url: "",
+            },
+          ],
+          suggestion: "",
         },
-      ],
-      suggestion: "",
-    },]);
+      ]
+    );
   }, [course]);
 
   const handleSubmit = async () => {
@@ -129,7 +167,7 @@ const EditCourse = () => {
   const handleCourseUpdate = async () => {
     const data = courseData;
     if (!editCourseLoading) {
-      const result = await dispatch(editCourseById({id ,data}));
+      const result = await dispatch(editCourseById({ id, data } as ICourse));
       if (result.meta.requestStatus === "fulfilled") {
         toast.success("Course updated successfully");
         navigate("/admin/courses");

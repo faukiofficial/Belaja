@@ -16,6 +16,7 @@ interface Section {
   videoLength: string;
   videoSection: string;
   links: Link[];
+  suggestion: string;
 }
 
 type Props = {
@@ -90,6 +91,7 @@ const CourseContent: React.FC<Props> = ({
         videoLength: "",
         videoSection: newVideoSection,
         links: [{ title: "", url: "" }],
+        suggestion: "",
       };
 
       setCourseContentData([...courseContentData, newContent]);
@@ -115,6 +117,7 @@ const CourseContent: React.FC<Props> = ({
         videoLength: "",
         videoSection: "",
         links: [{ title: "", url: "" }],
+        suggestion: "",
       };
   
       setCourseContentData([...courseContentData, newSection]);

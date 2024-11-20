@@ -10,30 +10,49 @@ interface CourseContentData {
   title: string;
   description: string;
   videoSection: string;
+  videoLength: string;
+  links: { title: string; url: string }[];
+  suggestion: string;
 }
 
-interface CourseBenefit {
+export interface CourseBenefit {
   title: string;
 }
 
-interface ICourse {
+export interface ICourseData {
+  videoUrl: string;
+  title: string;
+  description: string;
+  videoLength: string;
+  videoSection: string;
+  links: [
+    {
+      title: string;
+      url: string;
+    }
+  ];
+  suggestion: string;
+}
+
+export interface ICourse {
   _id: string;
   id: string;
-  data: [];
   name: string;
   description: string;
-  price: string;
-  estimatedPrice: string;
+  price: number;
+  estimatedPrice: number;
   tags: string;
   level: string;
+  category: string;
   demoUrl: string;
-  thumbnail: string;
+  thumbnail: { public_id: string; url: string; base64: string };
   benefits: CourseBenefit[];
   prerequisites: CourseBenefit[];
   courseContentData: CourseContentData[];
-  ratings?: number;
-  purchased?: number;
   createdAt: string;
+  data: ICourse[];
+  courseData: ICourseData[];
+  ratings: number;
 }
 
 interface CourseState {
@@ -156,7 +175,7 @@ export const getAllCourses = createAsyncThunk<ICourse[]>(
 
 export const editCourseById = createAsyncThunk<ICourse, ICourse>(
   "course/editCourseById",
-  async ({id, data}) => {
+  async ({ id, data }) => {
     try {
       const response = await axios.put(`${apiUrl}/edit-course/${id}`, data, {
         withCredentials: true,
@@ -177,7 +196,7 @@ export const editCourseById = createAsyncThunk<ICourse, ICourse>(
       throw error;
     }
   }
-)
+);
 
 export const deleteCourse = createAsyncThunk<void, string>(
   "course/deleteCourse",

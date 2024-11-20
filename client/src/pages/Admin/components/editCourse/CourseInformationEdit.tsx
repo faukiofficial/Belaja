@@ -4,24 +4,24 @@ type Props = {
   courseInfo: {
     name: string;
     description: string;
-    price: string;
-    estimatedPrice?: string;
+    price: number;
+    estimatedPrice?: number;
     tags: string;
     level: string;
     category: string;
     demoUrl: string;
-    thumbnail: string;
+    thumbnail: { public_id: string; url: string; base64: string };
   };
   setCourseInfo: (courseInfo: {
     name: string;
     description: string;
-    price: string;
-    estimatedPrice?: string;
+    price: number;
+    estimatedPrice?: number;
     tags: string;
     level: string;
     category: string;
     demoUrl: string;
-    thumbnail: string;
+    thumbnail: { public_id: string; url: string; base64: string };
   }) => void;
   active: number;
   setActive: (active: number) => void;
@@ -110,7 +110,7 @@ const CourseInformationEdit: FC<Props> = ({
               id="price"
               value={courseInfo.price}
               onChange={(e) =>
-                setCourseInfo({ ...courseInfo, price: e.target.value })
+                setCourseInfo({ ...courseInfo, price: Number(e.target.value) })
               }
               placeholder="Enter the course price"
               className="w-full p-2 600px:p-3 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white mt-2"
@@ -128,7 +128,7 @@ const CourseInformationEdit: FC<Props> = ({
               id="estimatedPrice"
               value={courseInfo.estimatedPrice}
               onChange={(e) =>
-                setCourseInfo({ ...courseInfo, estimatedPrice: e.target.value })
+                setCourseInfo({ ...courseInfo, estimatedPrice: Number(e.target.value) })
               }
               placeholder="Enter the course estimated price"
               className="w-full p-2 600px:p-3 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white mt-2"

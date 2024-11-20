@@ -5,8 +5,21 @@ import { RootState } from "../store";
 
 const apiUrl = import.meta.env.VITE_SERVER_URI;
 
+interface Order {
+  _id: string;
+  user: {
+    name: string;
+    email: string;
+  };
+  course: {
+    name: string;
+    price: number;
+  };
+  createdAt: string;
+}
+
 interface IOrder {
-  orders: [];
+  orders: Order[];
   getOrdersLoading: boolean;
   getOrdersError: string | null;
 }

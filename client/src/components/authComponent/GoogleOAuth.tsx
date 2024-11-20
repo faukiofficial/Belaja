@@ -1,4 +1,4 @@
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { useAppDispatch } from "../../redux/hooks";
 import { socialAuth } from "../../redux/slices/authSlice";
@@ -16,7 +16,12 @@ interface DecodedUser {
 const GoogleOAuth: React.FC<GoogleOAuth> = ({onClose}) => {
   const dispatch = useAppDispatch();
 
-  const handleLoginSuccess = async (response: { credential: string }) => {
+  const handleLoginSuccess = async (response: CredentialResponse) => {
+    if (!response.credential) {
+      console.error("No credential received");
+      return;
+    }
+
     const token = response.credential;
     const decodedUser = jwtDecode<DecodedUser>(token);
     console.log("User Info:", decodedUser);
@@ -37,14 +42,15 @@ const GoogleOAuth: React.FC<GoogleOAuth> = ({onClose}) => {
     }
   };
 
-  const handleLoginFailure = (error: unknown) => {
-    console.error("Google login failed:", error);
+  const handleLoginFailure = () => {
+    console.error("Google login failed:");
   };
+
   return (
     <div>
       <GoogleLogin
         onSuccess={handleLoginSuccess}
-        onFailure={handleLoginFailure}
+        onError={handleLoginFailure}
       />
     </div>
   );
