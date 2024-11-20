@@ -53,6 +53,7 @@ export interface ICourse {
   data: ICourse[];
   courseData: ICourseData[];
   ratings: number;
+  purchased: string;
 }
 
 interface CourseState {
