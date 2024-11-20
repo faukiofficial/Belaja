@@ -6,7 +6,6 @@ import {
   FaPlus,
   FaCogs,
   FaUsersCog,
-  FaChartBar,
   FaSignOutAlt,
   FaChevronUp,
   FaChevronDown,

@@ -1,4 +1,4 @@
-import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { useAppDispatch } from "../../redux/hooks";
 import { socialAuth } from "../../redux/slices/authSlice";

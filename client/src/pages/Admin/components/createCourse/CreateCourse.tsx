@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import CourseInformation from "./CourseInformation";
 import CourseOptions from "./CourseOptions";
 import CourseData from "./CourseData";

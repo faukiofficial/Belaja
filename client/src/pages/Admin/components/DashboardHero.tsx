@@ -1,8 +1,6 @@
 import DashboardHeader from "./DashboardHeader";
 
-type Props = {};
-
-const DashboardHero = (props: Props) => {
+const DashboardHero = () => {
   return (
     <div>
       <DashboardHeader />
