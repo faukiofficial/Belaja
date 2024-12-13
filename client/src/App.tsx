@@ -1,8 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "./redux/store";
@@ -28,7 +24,8 @@ import EditCourse from "./pages/Admin/components/editCourse/EditCourse";
 import ScrollButtons from "./components/ScrollButtons";
 import Orders from "./pages/Admin/components/orders/Orders";
 import Settings from "./pages/Admin/components/settings/Settings";
-import CobaHeader from "./components/CobaHeader";
+import CourseDetail from "./pages/Course/CourseDetail";
+import AllCourses from "./pages/Course/AllCourses";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -52,7 +49,8 @@ function App() {
       <GetUserInfoLoading isLoading={getUserInfoLoading} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/coba" element={<CobaHeader />} />
+        <Route path="/courses" element={<AllCourses />} />
+        <Route path="/course/:id" element={<CourseDetail />} />
         <Route
           path="/profile"
           element={

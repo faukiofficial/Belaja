@@ -153,11 +153,11 @@ const CourseContentEdit: React.FC<Props> = ({
     linkIndex: number,
     value: string
   ) => {
-    const updatedData = [...courseContentData]; // Make a shallow copy of the array
-    const updatedLinks = [...updatedData[sectionIndex].links]; // Create a new array for the links
-    updatedLinks[linkIndex] = { ...updatedLinks[linkIndex], title: value }; // Create a new object for the link
-    updatedData[sectionIndex].links = updatedLinks; // Update the section with the new links array
-    setCourseContentData(updatedData); // Set the updated data to the state
+    const updatedData = [...courseContentData];
+    const updatedLinks = [...updatedData[sectionIndex].links];
+    updatedLinks[linkIndex] = { ...updatedLinks[linkIndex], title: value }; 
+    updatedData[sectionIndex].links = updatedLinks;
+    setCourseContentData(updatedData);
   };
 
   const handleLinkUrlChange = (
@@ -313,7 +313,7 @@ const CourseContentEdit: React.FC<Props> = ({
                         }
                       />
                     </div>
-                    {item?.links.map((link, linkIndex) => (
+                    {item?.links?.map((link, linkIndex) => (
                       <div key={linkIndex} className="my-3">
                         <div className="flex items-center justify-between">
                           <label htmlFor="">Link {linkIndex + 1}</label>

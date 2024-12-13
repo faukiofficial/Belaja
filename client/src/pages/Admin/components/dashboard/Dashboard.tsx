@@ -48,7 +48,7 @@ const Dashboard = () => {
           </Box>
         </Box>
       ) : (
-        <>
+        <div>
           <OrdersAnalytics
             ordersAnalitycs={ordersAnalitycs}
           />
@@ -73,7 +73,7 @@ const Dashboard = () => {
             See All Courses
           </Link>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

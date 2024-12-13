@@ -12,6 +12,7 @@ import {
   addReplyToReview,
   getAllCoursesForAdmin,
   deleteCourse,
+  getNewFiveCourses,
 } from "../controllers/courseController";
 import { validateUserRole } from "../middlewares/validateUserRole";
 import { authenticateAndRefreshToken } from "../middlewares/authenticateAndRefreshToken ";
@@ -23,6 +24,7 @@ courseRouter.post(
   uploadCourse
 ); // done
 courseRouter.get("/get-courses", getAllCourses); // done
+courseRouter.get("/get-new-five-courses", getNewFiveCourses);
 courseRouter.get("/get-course/:id", getSingleCourse);
 courseRouter.put(
   "/edit-course/:id",

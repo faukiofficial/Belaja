@@ -5,14 +5,19 @@ import { RootState } from "../store";
 
 const apiUrl = import.meta.env.VITE_SERVER_URI;
 
+export interface AnalyticData {
+  month: string;
+  count: number;
+}
+
 interface IAnalytic {
-    coursesAnalitycs: [],
+    coursesAnalitycs: AnalyticData[],
     getCoursesAnalyticsLoading: boolean,
     getCoursesAnalyticsError: string | null
-    usersAnalitycs: [],
+    usersAnalitycs: AnalyticData[],
     getUsersAnalyticsLoading: boolean,
     getUsersAnalyticsError: string | null,
-    ordersAnalitycs: [],
+    ordersAnalitycs: AnalyticData[],
     getOrdersAnalyticsLoading: boolean,
     getOrdersAnalyticsError: string | null
 }
@@ -30,7 +35,7 @@ const initialState: IAnalytic = {
 }
 
 
-export const getCoursesAnalytics = createAsyncThunk<IAnalytic[]>(
+export const getCoursesAnalytics = createAsyncThunk<AnalyticData[]>(
     "analytic/getCoursesAnalytics",
     async () => {
       try {
@@ -40,7 +45,6 @@ export const getCoursesAnalytics = createAsyncThunk<IAnalytic[]>(
         if (response.data.success) {
           return response.data.courses.last12Months;
         } else if (response.data.success === false) {
-          toast.error(response.data.message);
           throw new Error(response.data.message);
         }
       } catch (error: unknown) {
@@ -56,7 +60,7 @@ export const getCoursesAnalytics = createAsyncThunk<IAnalytic[]>(
     }
   );
 
-export const getUsersAnalytics = createAsyncThunk<IAnalytic[]>(
+export const getUsersAnalytics = createAsyncThunk<AnalyticData[]>(
     "analytic/getUsersAnalytics",
     async () => {
       try {
@@ -82,7 +86,7 @@ export const getUsersAnalytics = createAsyncThunk<IAnalytic[]>(
     }
   );
 
-export const getOrdersAnalytics = createAsyncThunk<IAnalytic[]>(
+export const getOrdersAnalytics = createAsyncThunk<AnalyticData[]>(
     "analytic/getOrdersAnalytics",
     async () => {
       try {

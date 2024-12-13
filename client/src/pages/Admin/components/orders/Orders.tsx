@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button, Skeleton } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { format } from "timeago.js";
-import { GoMail } from "react-icons/go";
+// import { GoMail } from "react-icons/go";
 import { getOrders } from "../../../../redux/slices/orderSlice";
 
 
@@ -29,12 +29,9 @@ const Orders = () => {
     return () => clearInterval(intervalId);
   }, [theme]);
 
-
   useEffect(() => {
     dispatch(getOrders());
   }, [dispatch]);
-
-  console.log(orders);
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
@@ -43,22 +40,22 @@ const Orders = () => {
     { field: "courseTitle", headerName: "Course Title", flex: 1 },
     { field: "price", headerName: "Price", flex: 0.75 },
     { field: "orderedAt", headerName: "Ordered At", flex: 0.5 },
-    {
-      field: " ",
-      headerName: " ",
-      flex: 0.2,
-      renderCell: () => (
-        <Button
-          sx={{
-            minWidth: 0,
-            padding: 0,
-            color: theme === "dark" ? "#fff" : "#000",
-          }}
-        >
-          <GoMail size={20} />
-        </Button>
-      ),
-    },
+    // {
+    //   field: " ",
+    //   headerName: " ",
+    //   flex: 0.2,
+    //   renderCell: () => (
+    //     <Button
+    //       sx={{
+    //         minWidth: 0,
+    //         padding: 0,
+    //         color: theme === "dark" ? "#fff" : "#000",
+    //       }}
+    //     >
+    //       <GoMail size={20} />
+    //     </Button>
+    //   ),
+    // },
   ];
 
   const rows = orders?.map((order) => ({

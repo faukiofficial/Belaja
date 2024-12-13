@@ -77,8 +77,8 @@ const CreateCourse = () => {
 
     setCourseData({
       ...courseInfo,
-      benefits: formattedBenefits,
-      prerequisites: formattedPrerequisites,
+      benefits: formattedBenefits as [{ title: string }],
+      prerequisites: formattedPrerequisites as [{ title: string }],
       totalVideos: courseContentData.length,
       courseData: formattedCourseContentData,
     });

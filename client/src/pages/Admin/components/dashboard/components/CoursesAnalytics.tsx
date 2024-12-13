@@ -9,6 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { FC } from "react";
+import { AnalyticData } from "../../../../../redux/slices/analyticSlice";
 
 // Registrasi elemen-elemen yang digunakan oleh Chart.js
 ChartJS.register(
@@ -21,7 +22,7 @@ ChartJS.register(
 );
 
 type Props = {
-  coursesAnalitycs: [];
+  coursesAnalitycs: AnalyticData[];
 };
 
 const CoursesAnalytics: FC<Props> = ({
@@ -44,6 +45,7 @@ const CoursesAnalytics: FC<Props> = ({
   // Opsi untuk Chart.js
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "top" as const,
@@ -53,7 +55,7 @@ const CoursesAnalytics: FC<Props> = ({
         text: "Courses Analytics - Last 12 Months",
         font: {
           size: 18,
-          weight: "bold",
+          weight: "bold" as const,
         },
       },
     },

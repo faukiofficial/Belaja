@@ -18,7 +18,7 @@ import {
   getAllUsers,
   updateUserRoleByAdmin,
 } from "../../../../redux/slices/userSlice";
-import { GoMail } from "react-icons/go";
+// import { GoMail } from "react-icons/go";
 
 const ManageTeam = () => {
   const dispatch = useAppDispatch();
@@ -102,22 +102,22 @@ const ManageTeam = () => {
         </Button>
       ),
     },
-    {
-      field: " ",
-      headerName: "Email",
-      flex: 0.2,
-      renderCell: () => (
-        <Button
-          sx={{
-            minWidth: 0,
-            padding: 0,
-            color: theme === "dark" ? "#fff" : "#000",
-          }}
-        >
-          <GoMail size={20} />
-        </Button>
-      ),
-    },
+    // {
+    //   field: " ",
+    //   headerName: "Email",
+    //   flex: 0.2,
+    //   renderCell: () => (
+    //     <Button
+    //       sx={{
+    //         minWidth: 0,
+    //         padding: 0,
+    //         color: theme === "dark" ? "#fff" : "#000",
+    //       }}
+    //     >
+    //       <GoMail size={20} />
+    //     </Button>
+    //   ),
+    // },
   ];
 
   const rows =
@@ -261,7 +261,7 @@ const ManageTeam = () => {
               }}
             >
               <div className="text-lg font-semibold px-6 pt-2">Manage Admin</div>
-              <div className="px-6">You can channge the role of the user</div>
+              <div className="px-6">You can change the role of the user</div>
               <DialogContent>
                 <input
                   type="email"

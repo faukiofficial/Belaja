@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { AnalyticData } from "../../../../../redux/slices/analyticSlice";
 
 // Registrasi elemen-elemen yang digunakan oleh Chart.js
 ChartJS.register(
@@ -21,7 +22,7 @@ ChartJS.register(
 );
 
 type Props = {
-  usersAnalitycs: [];
+  usersAnalitycs: AnalyticData[];
 }
 
 const UsersAnalytics: FC<Props> = ({ usersAnalitycs }) => {
@@ -43,6 +44,7 @@ const UsersAnalytics: FC<Props> = ({ usersAnalitycs }) => {
   // Opsi untuk Chart.js
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "top" as const,
@@ -52,7 +54,7 @@ const UsersAnalytics: FC<Props> = ({ usersAnalitycs }) => {
         text: "Users Analytics - Last 12 Months",
         font: {
           size: 18,
-          weight: "bold",
+          weight: "bold" as const,
         },
       },
     },

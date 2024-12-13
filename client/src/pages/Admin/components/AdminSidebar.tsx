@@ -7,10 +7,9 @@ import {
   FaCogs,
   FaUsersCog,
   FaSignOutAlt,
-  FaChevronUp,
-  FaChevronDown,
+  // FaChevronUp,
+  // FaChevronDown,
 } from "react-icons/fa";
-import { MdDashboardCustomize } from "react-icons/md";
 import { Avatar } from "@mui/material";
 import { useAppDispatch } from "../../../redux/hooks";
 import { logoutUser } from "../../../redux/slices/authSlice";
@@ -35,7 +34,7 @@ const AdminSidebar: React.FC<Props> = ({ userInfo }) => {
     setOpenSubMenu(openSubMenu === label ? null : label);
   };
 
-  const isPathActive = (paths: string[]) => paths.includes(location.pathname);
+  // const isPathActive = (paths: string[]) => paths.includes(location.pathname);
 
   const handleLogout = async () => {
     const result = await dispatch(logoutUser());
@@ -79,7 +78,7 @@ const AdminSidebar: React.FC<Props> = ({ userInfo }) => {
         </span>
       </div>
 
-      <nav className="flex flex-col mt-4 gap-3">
+      <nav className="flex flex-col mt-4 gap-2">
         <NavLink
           to="dashboard"
           className="flex items-center px-4 py-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -98,16 +97,16 @@ const AdminSidebar: React.FC<Props> = ({ userInfo }) => {
               <FaUsers className="mr-2" />
               <span>Data</span>
             </NavLink>
-            {openSubMenu === "Data" ||
+            {/* {openSubMenu === "Data" ||
             isPathActive(["/admin/users", "/admin/orders"]) ? (
               <FaChevronUp />
             ) : (
               <FaChevronDown />
-            )}
+            )} */}
           </button>
 
-          {(openSubMenu === "Data" ||
-            isPathActive(["/admin/users", "/admin/orders"])) && (
+          {/* {(openSubMenu === "Data" ||
+            isPathActive(["/admin/users", "/admin/orders"])) && ( */}
             <div className="ml-8">
               <NavLink
                 to="users"
@@ -132,7 +131,7 @@ const AdminSidebar: React.FC<Props> = ({ userInfo }) => {
                 Orders
               </NavLink>
             </div>
-          )}
+          {/* )} */}
         </div>
 
         <div>
@@ -144,15 +143,15 @@ const AdminSidebar: React.FC<Props> = ({ userInfo }) => {
               <FaPlus className="mr-2" />
               <span>Content</span>
             </NavLink>
-            {openSubMenu === "Content" ||
+            {/* {openSubMenu === "Content" ||
             isPathActive(["/admin/create-course", "/admin/courses"]) ? (
               <FaChevronUp />
             ) : (
               <FaChevronDown />
-            )}
+            )} */}
           </button>
-          {(openSubMenu === "Content" ||
-            isPathActive(["/admin/create-course", "/admin/courses"])) && (
+          {/* {(openSubMenu === "Content" ||
+            isPathActive(["/admin/create-course", "/admin/courses"])) && ( */}
             <div className="ml-8">
               <NavLink
                 to="courses"
@@ -174,59 +173,10 @@ const AdminSidebar: React.FC<Props> = ({ userInfo }) => {
                 }
                 onClick={() => handleSubMenuToggle("Content")}
               >
-                Create Courses
+                Create Course
               </NavLink>
             </div>
-          )}
-        </div>
-
-        <div>
-          <button
-            onClick={() => handleSubMenuToggle("Customization")}
-            className="flex items-center justify-between px-4 py-2 w-full text-left text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
-          >
-            <NavLink to="hero" className="flex items-center">
-              <MdDashboardCustomize className="mr-2" />
-              <span>Customization</span>
-            </NavLink>
-
-            {openSubMenu === "Customization" ||
-            isPathActive(["/admin/faq", "/admin/categories"]) ? (
-              <FaChevronUp />
-            ) : (
-              <FaChevronDown />
-            )}
-          </button>
-          {(openSubMenu === "Customization" ||
-            isPathActive([
-              "/admin/faq",
-              "/admin/categories",
-            ])) && (
-            <div className="ml-8">
-              <NavLink
-                to="faq"
-                className={({ isActive }) =>
-                  `block py-2 text-sm hover:underline ${
-                    isActive ? "text-[#2563eb] dark:text-[#3b82f6]" : ""
-                  }`
-                }
-                onClick={() => handleSubMenuToggle("Customization")}
-              >
-                FAQ
-              </NavLink>
-              <NavLink
-                to="categories"
-                className={({ isActive }) =>
-                  `block py-2 text-sm hover:underline ${
-                    isActive ? "text-[#2563eb] dark:text-[#3b82f6]" : ""
-                  }`
-                }
-                onClick={() => handleSubMenuToggle("Customization")}
-              >
-                Categories
-              </NavLink>
-            </div>
-          )}
+          {/* )} */}
         </div>
 
         <NavLink

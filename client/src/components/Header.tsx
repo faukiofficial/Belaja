@@ -15,7 +15,6 @@ const navItemsData = [
   { name: "Courses", url: "/courses" },
   { name: "About", url: "/about" },
   { name: "Policy", url: "/policy" },
-  { name: "FAQ", url: "/faq" },
 ];
 
 const Header: React.FC = () => {
@@ -29,8 +28,6 @@ const Header: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { userInfo } = useAppSelector((state) => state.user);
-
-  console.log("userInfo", userInfo);
 
   const handleMenuClick = (name: string) => {
     setActiveItem(name);
@@ -84,7 +81,7 @@ const Header: React.FC = () => {
               to={item.url}
               onClick={() => handleMenuClick(item.name)}
               className={`text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white ${
-                activeItem === item.name
+                window.location.pathname === item.url
                   ? "font-bold text-black dark:text-white"
                   : ""
               }`}
@@ -156,7 +153,7 @@ const Header: React.FC = () => {
               onClick={openLoginModal}
               className="text-black dark:text-white hidden 600px:inline-block underline hover:text-slate-400"
             >
-              Login or Register
+              Login
             </button>
           )}
 
@@ -196,7 +193,7 @@ const Header: React.FC = () => {
                 onClick={openLoginModal}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full"
               >
-                Login or Register
+                Login
               </button>
             </div>
           </div>

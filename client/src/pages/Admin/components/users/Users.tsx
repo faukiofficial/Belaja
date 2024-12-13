@@ -6,7 +6,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import { AiOutlineDelete } from "react-icons/ai";
 import { format } from "timeago.js";
 import { deleteUserByAdmin, getAllUsers } from "../../../../redux/slices/userSlice";
-import { GoMail } from "react-icons/go";
+// import { GoMail } from "react-icons/go";
 
 
 const Users = () => {
@@ -82,22 +82,22 @@ const Users = () => {
         </Button>
       ),
     },
-    {
-      field: " ",
-      headerName: "Email",
-      flex: 0.2,
-      renderCell: () => (
-        <Button
-          sx={{
-            minWidth: 0,
-            padding: 0,
-            color: theme === "dark" ? "#fff" : "#000",
-          }}
-        >
-          <GoMail size={20} />
-        </Button>
-      ),
-    },
+    // {
+    //   field: " ",
+    //   headerName: "Email",
+    //   flex: 0.2,
+    //   renderCell: () => (
+    //     <Button
+    //       sx={{
+    //         minWidth: 0,
+    //         padding: 0,
+    //         color: theme === "dark" ? "#fff" : "#000",
+    //       }}
+    //     >
+    //       <GoMail size={20} />
+    //     </Button>
+    //   ),
+    // },
   ];
 
   const rows = users?.map((user) => ({

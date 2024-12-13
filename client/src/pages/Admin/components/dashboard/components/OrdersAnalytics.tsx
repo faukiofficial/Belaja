@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { AnalyticData } from "../../../../../redux/slices/analyticSlice";
 
 // Registrasi elemen-elemen yang digunakan oleh Chart.js
 ChartJS.register(
@@ -21,11 +22,10 @@ ChartJS.register(
 );
 
 type Props = {
-  ordersAnalitycs: [],
+  ordersAnalitycs: AnalyticData[];
 };
 
 const OrdersAnalytics: FC<Props> = ({ ordersAnalitycs }) => {
-
   // Transformasi data untuk Chart.js
   const chartData = {
     labels: ordersAnalitycs.map((item) => item.month), // Labels untuk sumbu X
@@ -43,6 +43,7 @@ const OrdersAnalytics: FC<Props> = ({ ordersAnalitycs }) => {
   // Opsi untuk Chart.js
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "top" as const,
@@ -52,7 +53,7 @@ const OrdersAnalytics: FC<Props> = ({ ordersAnalitycs }) => {
         text: "Orders Analytics - Last 12 Months",
         font: {
           size: 18,
-          weight: "bold",
+          weight: "bold" as const,
         },
       },
     },
@@ -64,16 +65,13 @@ const OrdersAnalytics: FC<Props> = ({ ordersAnalitycs }) => {
   };
 
   return (
-    <>
-    
-        <div className="h-full">
-          <div className="w-fullflex items-center justify-center">
-            <div className="w-full h-[400px]">
-              <Bar data={chartData} options={options} />
-            </div>
-          </div>
+    <div className="h-full w-full">
+      <div className="w-full flex items-center justify-center">
+        <div className="w-full h-[400px]">
+          <Bar data={chartData} options={options} />
         </div>
-    </>
+      </div>
+    </div>
   );
 };
 

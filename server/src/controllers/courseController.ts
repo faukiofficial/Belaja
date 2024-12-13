@@ -102,12 +102,21 @@ export const getSingleCourse = CatchAsyncError(
     try {
       const courseId = req.params.id;
 
-      const isChacheExist = await redis.get(courseId);
-      if (isChacheExist) {
-        return res.status(200).json({
-          success: true,
-          course: JSON.parse(isChacheExist),
-        });
+      const isCacheExist = await redis.get(courseId);
+      if (isCacheExist) {
+         let cachedCourse = JSON.parse(isCacheExist);
+
+         cachedCourse.courseData = cachedCourse.courseData.map(({ description, title, videoLength, _id }: any) => ({
+           description,
+           title,
+           videoLength,
+           _id,
+         }));
+ 
+         return res.status(200).json({
+           success: true,
+           course: cachedCourse,
+         });
       } else {
         const course = await CourseModel.findById(courseId).select(
           "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
@@ -147,6 +156,35 @@ export const getAllCourses = CatchAsyncError(
         );
 
         await redis.set("allCourses", JSON.stringify(courses) as any);
+
+        res.status(200).json({
+          success: true,
+          courses,
+        });
+      }
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+// get new five courses - without purchase
+export const getNewFiveCourses = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const isChacheExist = await redis.get("allCourses");
+      if (isChacheExist) {
+        return res.status(200).json({
+          success: true,
+          courses: JSON.parse(isChacheExist).slice(0, 5).reverse(),
+        });
+      } else {
+        const courses = await CourseModel.find()
+          .select("-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links")
+          .sort({ createdAt: -1 })
+          .limit(5);
+
+        await redis.set("allCourses", JSON.stringify(courses));
 
         res.status(200).json({
           success: true,

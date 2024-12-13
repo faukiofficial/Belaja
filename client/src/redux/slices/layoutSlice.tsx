@@ -5,10 +5,21 @@ import { RootState } from "../store";
 
 const apiUrl = import.meta.env.VITE_SERVER_URI;
 
+export interface Category {
+  _id: string;
+  title: string;
+}
+
+export interface FAQ {
+  _id: string;
+  question: string;
+  answer: string;
+  active: boolean;
+}
 
 interface LayoutState {
-    faq: string[];
-    categories: string[];
+    faq: FAQ[];
+    categories: Category[];
     createLayoutLoading: boolean;
     createLayoutError: string | null;
     editLayoutLoading: boolean;
@@ -32,7 +43,7 @@ const initialState: LayoutState = {
     getFAQError: null,
 };
 
-export const createLayout = createAsyncThunk<LayoutState, {type: string, faq: string}>(
+export const createLayout = createAsyncThunk<LayoutState, {type: string, categories: Category[], faq: FAQ[]}>(
   "layout/createLayout",
   async (data) => {
     try {
@@ -40,10 +51,8 @@ export const createLayout = createAsyncThunk<LayoutState, {type: string, faq: st
         withCredentials: true,
       });
       if (response.data.success) {
-        toast.success(response.data.message);
         return response.data;
       } else {
-        toast.error(response.data.message);
         throw new Error(response.data.message);
       }
     } catch (error: unknown) {
@@ -58,26 +67,24 @@ export const createLayout = createAsyncThunk<LayoutState, {type: string, faq: st
   }
 );
 
-export const editLayout = createAsyncThunk<LayoutState, {type: string, faq: string}>(
+export const editLayout = createAsyncThunk<LayoutState, {type: string, categories: Category[], faq: FAQ[]}>(
   "layout/editLayout",
   async (data) => {
     try {
-      const response = await axios.post(`${apiUrl}/edit-layout`, data, {
+      const response = await axios.put(`${apiUrl}/edit-layout`, data, {
         withCredentials: true,
       });
       if (response.data.success) {
-        toast.success(response.data.message);
         return response.data;
       } else {
-        toast.error(response.data.message);
         throw new Error(response.data.message);
       }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        const message = error.response?.data?.message || "Create layout failed";
+        const message = error.response?.data?.message || "Edit layout failed";
         toast.error(message);
       } else {
-        toast.error("An unknown error occurred during create layout.");
+        toast.error("An unknown error occurred during edit layout.");
       }
       throw error;
     }
@@ -127,10 +134,8 @@ const layoutSlice = createSlice({
         state.createLayoutLoading = true;
         state.createLayoutError = null;
       })
-      .addCase(createLayout.fulfilled, (state, action) => {
+      .addCase(createLayout.fulfilled, (state) => {
         state.createLayoutLoading = false;
-        state.faq = action.payload;
-        state.categories = action.payload;
       })
       .addCase(createLayout.rejected, (state, action) => {
         state.createLayoutLoading = false;
@@ -140,10 +145,8 @@ const layoutSlice = createSlice({
         state.editLayoutLoading = true;
         state.editLayoutError = null;
       })
-      .addCase(editLayout.fulfilled, (state, action) => {
+      .addCase(editLayout.fulfilled, (state) => {
         state.editLayoutLoading = false;
-        state.faq = action.payload;
-        state.categories = action.payload;
       })
       .addCase(editLayout.rejected, (state, action) => {
         state.editLayoutLoading = false;

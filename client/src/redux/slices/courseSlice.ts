@@ -15,11 +15,8 @@ interface CourseContentData {
   suggestion: string;
 }
 
-export interface CourseBenefit {
-  title: string;
-}
-
 export interface ICourseData {
+  _id: string;
   videoUrl: string;
   title: string;
   description: string;
@@ -34,6 +31,16 @@ export interface ICourseData {
   suggestion: string;
 }
 
+export interface IReview {
+  _id: string;
+  rating: number;
+  review: string;
+  user: {
+    name: string;
+    avatar: { public_id: string; url: string; };
+  };
+}
+
 export interface ICourse {
   _id: string;
   id: string;
@@ -46,23 +53,27 @@ export interface ICourse {
   category: string;
   demoUrl: string;
   thumbnail: { public_id: string; url: string; base64: string };
-  benefits: CourseBenefit[];
-  prerequisites: CourseBenefit[];
+  benefits: [{ title: string, _id?: string }];
+  prerequisites: [{ title: string, _id?: string }];
   courseContentData: CourseContentData[];
   createdAt: string;
   data: ICourse[];
   courseData: ICourseData[];
   ratings: number;
   purchased: string;
+  totalVideos: number;
+  reviews: IReview[];
 }
 
 interface CourseState {
   course: ICourse | null;
   courses: ICourse[];
+  newFiveCourses: ICourse[];
   courseInfo: ICourse | null;
   createCourseLoading: boolean;
   getCourseLoading: boolean;
   getAllCoursesLoading: boolean;
+  getNewFiveCoursesLoading: boolean;
   editCourseLoading: boolean;
   getCourseInfoLoading: boolean;
   updateCourseLoading: boolean;
@@ -72,6 +83,7 @@ interface CourseState {
   courseError: string | null;
   createCourseError: string | null;
   getAllCoursesError: string | null;
+  getNewFiveCoursesError: string | null;
   editCourseError: string | null;
   updateCourseError: string | null;
   deleteCourseError: string | null;
@@ -80,10 +92,12 @@ interface CourseState {
 const initialState: CourseState = {
   course: null,
   courses: [],
+  newFiveCourses: [],
   courseInfo: null,
   createCourseLoading: false,
   getCourseLoading: false,
   getAllCoursesLoading: false,
+  getNewFiveCoursesLoading: false,
   editCourseLoading: false,
   getCourseInfoLoading: false,
   updateCourseLoading: false,
@@ -93,6 +107,7 @@ const initialState: CourseState = {
   courseError: null,
   createCourseError: null,
   getAllCoursesError: null,
+  getNewFiveCoursesError: null,
   editCourseError: null,
   updateCourseError: null,
   deleteCourseError: null,
@@ -170,6 +185,18 @@ export const getAllCourses = createAsyncThunk<ICourse[]>(
         toast.error("An unknown error occurred during get all courses.");
       }
       throw error;
+    }
+  }
+);
+
+export const getNewFiveCourses = createAsyncThunk<ICourse[]>(
+  "course/getNewFiveCourses",
+  async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/get-new-five-courses`);
+      return response.data.courses;
+    } catch (error: unknown) {
+      console.log("error", error);
     }
   }
 );
@@ -272,6 +299,18 @@ const courseSlice = createSlice({
         state.getAllCoursesLoading = false;
         state.getAllCoursesError =
           action.error.message || "Get all courses failed";
+      })
+      .addCase(getNewFiveCourses.pending, (state) => {
+        state.getNewFiveCoursesLoading = true;
+      })
+      .addCase(getNewFiveCourses.fulfilled, (state, action) => {
+        state.getNewFiveCoursesLoading = false;
+        state.newFiveCourses = action.payload;
+      })
+      .addCase(getNewFiveCourses.rejected, (state, action) => {
+        state.getNewFiveCoursesLoading = false;
+        state.getNewFiveCoursesError =
+          action.error.message || "Get new five courses failed";
       })
       .addCase(editCourseById.pending, (state) => {
         state.editCourseLoading = true;
